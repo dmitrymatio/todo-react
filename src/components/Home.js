@@ -6,14 +6,15 @@ import { nanoid } from "nanoid";
 
 const FILTER_MAP = {
   All: () => true,
-  Active: task => !task.completed,
-  Completed: task => task.completed
+  NotStarted: task => task.status == 0,
+  Started: task => task.status == 1,
+  Completed: task => task.status == 2
 };
 
 const DATA = [
-  { id: "todo-0", name: "Eat", completed: true },
-  { id: "todo-1", name: "Sleep", completed: false },
-  { id: "todo-2", name: "Repeat", completed: false }
+  { id: "todo-0", name: "Eat", status: 0 },
+  { id: "todo-1", name: "Sleep", status: 1 },
+  { id: "todo-2", name: "Repeat", status: 2 }
 ];
 
 const FILTER_NAMES = Object.keys(FILTER_MAP);
@@ -44,7 +45,7 @@ function Home(props) {
       <Todo
         id={task.id}
         name={task.name}
-        completed={task.completed}
+        status={task.status}
         key={task.id}
         toggleTaskCompleted={toggleTaskCompleted}
         deleteTask={deleteTask}
@@ -62,17 +63,17 @@ function Home(props) {
   ));
 
   function addTask(name) {
-    const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
+    const newTask = { id: "todo-" + nanoid(), name: name, status: 0 };
     setTasks([...tasks, newTask]);
   }
 
-  function toggleTaskCompleted(id) {
+  function toggleTaskCompleted(id, statusCode) {
     const updatedTasks = tasks.map(task => {
       // if this task has the same ID as the edited task
       if (id === task.id) {
         // use object spread to make a new object
         // whose `completed` prop has been inverted
-        return { ...task, completed: !task.completed }
+        return { ...task, status: statusCode }
       }
       return task;
     });
