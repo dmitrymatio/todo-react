@@ -6,6 +6,7 @@ import About from "./components/About";
 import Navbar from "./components/Navbar";
 import Error from "./components/Error";
 import ThemeSwitcher from "./components/ThemeSwitcher";
+import RandUserApi from "./components/RandUserApi";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/about" component={About} />
+        <Route path="/randuserapi" component={RandUserApi} />
         <Route component={Error} />
       </Switch>
     </>
